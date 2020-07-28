@@ -7,19 +7,18 @@ else
 fi
 echo "restoring postgresql database..."
 if az postgres server restore --resource-group $1 --name $4  --restore-point-in-time $5 --source-server $3; then
-	echo "postgresql database has restored successfully" && sleep 300
+	echo "postgresql database has restored successfully" && sleep 60
 else
 	echo "Error occured while restoring database" && exit
 fi
 echo "adding vnet rules"
 if az postgres server vnet-rule create --resource-group $1 --server-name $4 --name vnrule-test2-saumya-postgres-devazure --subnet /subscriptions/7f6172c5-73bf-4f17-972a-d87da29b09c2/resourceGroups/shoot--iot-dev--devazure-st/providers/Microsoft.Network/virtualNetworks/shoot--iot-dev--devazure-st/subnets/shoot--iot-dev--devazure-st-nodes; then
-	echo "virtualNetworks has been added successfully for recovered postgres database server" && sleep 200
+	echo "virtualNetworks has been added successfully for recovered postgres database server" && sleep 60
 else
 	echo "Error occured while adding vnet rules" && exit
 fi
 echo "making a call to recovery db"
-recovery_name=`PGPASSWORD=KCBzylS7tcegomK 
-if psql -h psql-test2-saumya-postgres-recovery-devazure.postgres.database.azure.com -U iotroot@psql-test2-saumya-postgres-recovery-devazure -d postgres -c "select name from "admin_users" where name = 'root'"`; then
+if recovery_name=`PGPASSWORD=KCBzylS7tcegomK psql -h psql-test2-saumya-postgres-recovery-devazure.postgres.database.azure.com -U iotroot@psql-test2-saumya-postgres-recovery-devazure -d postgres -c "select name from "admin_users" where name = 'root'"`; then
 	echo "DB call successful" && sleep 100
 else
 	echo "DB call unsuccessfull" && exit
@@ -44,8 +43,7 @@ else
 	echo "Error occured while adding vnet rules for original database server" && exit
 fi
 echo "making a call to original db"
-name=`PGPASSWORD=KCBzylS7tcegomK 
-if psql -h psql-test2-saumya-postgres-devazure.postgres.database.azure.com -U iotroot@psql-test2-saumya-postgres-devazure -d postgres -c "select name from "admin_users" where name = 'root'"`; then
+if name=`PGPASSWORD=KCBzylS7tcegomK psql -h psql-test2-saumya-postgres-devazure.postgres.database.azure.com -U iotroot@psql-test2-saumya-postgres-devazure -d postgres -c "select name from "admin_users" where name = 'root'"`; then
 	echo "DB call to original server successful" && sleep 100
 else
 	echo "DB call to original server unsuccessfull" && exit
