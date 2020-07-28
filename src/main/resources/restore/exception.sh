@@ -49,7 +49,7 @@ fi
 echo "making a call to original db"
 query2="psql -h $az_host -U $az_user -d postgres -c "select name from "admin_users" where name = 'root'""
 echo "PGPASSWORD=$az_password $query2;"
-if name=`PGPASSWORD=$az_password psql -h $az_host -U $az_user -d postgres -c "select name from "admin_users" where name = 'root'"`; then
+if name=`PGPASSWORD=$az_password $query2`; then
 	echo "DB call to original server successful" && sleep 60
 else
 	echo "DB call to original server unsuccessfull" && exit
