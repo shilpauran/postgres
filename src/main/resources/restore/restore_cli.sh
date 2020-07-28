@@ -25,20 +25,20 @@ else
 fi
 echo "deleting original instance"
 if az postgres server delete --resource-group $1 --name $3 --subscription $2; then
-	echo "original instance has been deleted successfully" && sleep 500
+	echo "original instance has been deleted successfully"
 else
 	echo "original instance deletion failed" && exit
 fi
 echo "restoring to original database..."
 currenttime=`date -u +%Y-%m-%dT%H:%M:%S.000Z`;
 if az postgres server restore --resource-group $1 --name $3  --restore-point-in-time $currenttime --source-server $4;then
-	echo "original database has been restored successfully" && sleep 300
+	echo "original database has been restored successfully" && sleep 60
 else
 	echo "original database deletion failed" && exit
 fi
 echo "adding vnet rules to restored original database"
 if az postgres server vnet-rule create --resource-group $1 --server-name $3 --name vnrule-test2-saumya-postgres-devazure --subnet /subscriptions/7f6172c5-73bf-4f17-972a-d87da29b09c2/resourceGroups/shoot--iot-dev--devazure-st/providers/Microsoft.Network/virtualNetworks/shoot--iot-dev--devazure-st/subnets/shoot--iot-dev--devazure-st-nodes; then
-	echo "virtualNetworks has been added successfully for original postgres database server" && sleep 200
+	echo "virtualNetworks has been added successfully for original postgres database server" && sleep 60
 else
 	echo "Error occured while adding vnet rules for original database server" && exit
 fi
@@ -50,7 +50,7 @@ else
 fi
 echo "deleting recovery instance"
 if az postgres server delete --resource-group $1 --name $4 --subscription $2; then
-	echo "recovered instance has been deleted successfully" && sleep 500
+	echo "recovered instance has been deleted successfully"
 else
 	echo "recovered instance deletion failed" && exit
 fi
