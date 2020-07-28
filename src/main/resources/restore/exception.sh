@@ -20,9 +20,7 @@ else
 	echo "Error occured while adding vnet rules" && exit
 fi
 echo "making a call to recovery db"
-query1="psql -h $az_host_recovery -U $az_user_recovery -d postgres -c "select name from "admin_users" where name = 'root'""
-echo "PGPASSWORD=$az_password $query1;"
-if recovery_name=`PGPASSWORD=$az_password $query1`; then
+if recovery_name=`PGPASSWORD=$az_password $az_query_recovery`; then
 	echo "DB call successful" && sleep 60
 else
 	echo "DB call unsuccessful" && exit
@@ -47,9 +45,7 @@ else
 	echo "Error occured while adding vnet rules for original database server" && exit
 fi
 echo "making a call to original db"
-query2="psql -h $az_host -U $az_user -d postgres -c "select name from "admin_users" where name = 'root'""
-echo "PGPASSWORD=$az_password $query2;"
-if name=`PGPASSWORD=$az_password $query2`; then
+if name=`PGPASSWORD=$az_password $az_query`; then
 	echo "DB call to original server successful" && sleep 60
 else
 	echo "DB call to original server unsuccessfull" && exit
