@@ -20,14 +20,15 @@ else
 	echo "Error occured while adding vnet rules" && exit
 fi
 echo "making a call to recovery db"
-echo "recovery_name=`PGPASSWORD=$az_password psql -h $az_host_recovery -U $az_user_recovery -d postgres -c "select name from "admin_users" where name = 'root'"`;"
-if recovery_name=`PGPASSWORD=$az_password psql -h $az_host_recovery -U $az_user_recovery -d postgres -c "select name from "admin_users" where name = 'root'"`; then
+query1="psql -h $az_host_recovery -U $az_user_recovery -d postgres -c "select name from "admin_users" where name = 'root'""
+echo "PGPASSWORD=$az_password $query1;"
+if recovery_name=`PGPASSWORD=$az_password $query1`; then
 	echo "DB call successful" && sleep 60
 else
 	echo "DB call unsuccessful" && exit
 fi
 echo "deleting original instance"
-if az postgres server delete --resource-group $az_resource_group --name $az_source_server --subscription $az_subscription; then
+if az postgres server delete -y --resource-group $az_resource_group --name $az_source_server --subscription $az_subscription; then
 	echo "original instance has been deleted successfully" && sleep 500
 else
 	echo "original instance deletion failed" && exit
@@ -46,14 +47,15 @@ else
 	echo "Error occured while adding vnet rules for original database server" && exit
 fi
 echo "making a call to original db"
-echo "name=`PGPASSWORD=az_password psql -h az_host -U az_user -d postgres -c "select name from "admin_users" where name = 'root'"`;"
-if name=`PGPASSWORD=az_password psql -h az_host -U az_user -d postgres -c "select name from "admin_users" where name = 'root'"`; then
+query2="psql -h $az_host -U $az_user -d postgres -c "select name from "admin_users" where name = 'root'""
+echo "PGPASSWORD=$az_password $query2;"
+if name=`PGPASSWORD=$az_password psql -h $az_host -U $az_user -d postgres -c "select name from "admin_users" where name = 'root'"`; then
 	echo "DB call to original server successful" && sleep 60
 else
 	echo "DB call to original server unsuccessfull" && exit
 fi
 echo "deleting recovery instance"
-if az postgres server delete --resource-group $az_resource_group --name $az_recovery_server --subscription $az_subscription; then
+if az postgres server delete -y --resource-group $az_resource_group --name $az_recovery_server --subscription $az_subscription; then
 	echo "recovered instance has been deleted successfully" && sleep 60
 else
 	echo "recovered instance deletion failed" && exit
