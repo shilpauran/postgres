@@ -44,6 +44,8 @@ if az postgres server show --name "$az_recovery_server" --resource-group "$az_re
 		echo " recovery database deletion successful" && sleep 500
 	else
 		err " unable to delete the existing recovery server" && exit
+else
+	echo " recovery database check complete"
 fi
 
 #5 check if virtual network and subnet exists or not. if not terminate the script
