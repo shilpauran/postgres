@@ -44,6 +44,7 @@ if az postgres server show --name "$az_recovery_server" --resource-group "$az_re
 		echo " recovery database deletion successful" && sleep 500
 	else
 		err " unable to delete the existing recovery server" && exit
+	fi
 else
 	echo " recovery database check complete"
 fi
