@@ -5,10 +5,7 @@ az_instance="$1"
 az_landscape="$2"
 az_user="$3"
 
-echo "user name is ${az_user}"
-
 az_password="$4"
-echo "password is {$az_password}"
 
 az_ins_land="${az_instance}-${az_landscape}"
 az_ins_recovery_land="${az_instance}-recovery-${az_landscape}"
@@ -27,13 +24,13 @@ echo "restore point in time is $az_restore_time"
 
 if "$az_landscape" == "devazure"; then
   export az_subscription="7f6172c5-73bf-4f17-972a-d87da29b09c2"
-  echo "subscription is $az_subscription"
+  echo " subscription is $az_subscription"
   export az_shoot_resource="shoot--iot-dev--devazure-st"
-  echo "shoot resource is $az_shoot_resource"
+  echo " shoot resource is $az_shoot_resource"
   export az_subnet="shoot--iot-dev--devazure-st-nodes"
-  echo "subnet is $az_subnet"
+  echo " subnet is $az_subnet"
 else
-  echo "no subscription found"
+  echo " no subscription found"
 fi
 
 export az_vnetrulename="vnrule-${az_ins_land}"
