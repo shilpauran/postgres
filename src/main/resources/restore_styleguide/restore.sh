@@ -46,12 +46,12 @@ if az postgres server show --name "$az_recovery_server" --resource-group "$az_re
 		err " unable to delete the existing recovery server" && exit
 fi
 
-#5 check if virtual network exists or not. if not terminate the script
-echo "checking for virtual network"
-if az network vnet show -g "$az_shoot_resource" -n "$az_shoot_resource"; then
-	echo " virtual network exists"
+#5 check if virtual network and subnet exists or not. if not terminate the script
+echo "checking for subnet and virtual network"
+if az network vnet subnet show -g "$az_shoot_resource" --vnet-name "$az_shoot_resource" -n "$az_subnet"; then
+	echo " subnet and virtual network exists"
 else
-	err " required virtual network to access the resource does not exist" && exit
+	err " required subnet or virtual network to access the resource does not exist" && exit
 fi
 
 
