@@ -59,4 +59,5 @@ else
 	echo "recovered instance deletion failed" && exit
 fi
 echo "Postgres Database Server has restored successfully"
+if 
 exit
