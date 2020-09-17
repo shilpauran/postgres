@@ -23,20 +23,21 @@ echo "environment set up complete"
 
 # 2. add az login information to shared tenant
 #create service principle
-if [[credentials.yml]];then
+if credentials.yml;then
 	echo "credentials.yml exists- not creating this file"
-elif [[credentials.yml.enc]];then
+elif credentials.yml.enc;then
 	echo "credentails.yml does not exists, encrypted file present,decrypting"
 	chmod +x decrypt_credentials.sh
 	echo $credentials_encryption_key > decrypt_password_in
 	decrypt_credentials.sh
-	if [[ decrypt_password_in ]]; then
+	if decrypt_password_in; then
 		rm decrypt_password_in
 	fi
-	if [[ ! credentials.yml ]]; then
+	if credentials.yml; then
+		echo "Decryption done"
+	else
         err "decryption unsuccessful. aborting" && exit
     fi
-	echo "Decryption done"
 else
 	echo "encrypt key not found"
 fi
