@@ -61,8 +61,10 @@ echo "recovery host is $az_host_recovery"
 export az_user_recovery="iotroot@psql-${az_ins_recovery_land}"
 echo "recovery user is $az_user_recovery"
 
+echo "environment set up complete"
+
 # 2. add az login information to shared tenant
-echo "setting account subscription"
+echo "setting account subscription for shared tenant"
 if az account set --subscription "$az_subscription"; then 
 	echo " subscription set successful"
 else 

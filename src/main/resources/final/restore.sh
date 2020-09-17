@@ -22,7 +22,7 @@ source env.sh "$1" "$2" "$3" "$4" "$5"
 echo "environment set up complete"
 
 # 2. add az login information to shared tenant
-echo "setting account subscription"
+echo "setting account subscription for shared tenant"
 if az account set --subscription "$az_subscription"; then 
 	echo " subscription set successful"
 else 

@@ -22,7 +22,7 @@ echo "recovery server is $az_recovery_server"
 export az_restore_time="$5"
 echo "restore point in time is $az_restore_time"
 
-if [ $az_landscape == "devazure-st" ]; then
+if [ $az_landscape == "devazure" ]; then
   export az_subscription="7f6172c5-73bf-4f17-972a-d87da29b09c2"
   echo " subscription is $az_subscription"
   export az_shoot_resource="shoot--iot-dev--devazure-st"
