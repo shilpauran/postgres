@@ -38,7 +38,7 @@ echo "source server is $az_source_server"
 export az_recovery_server="psql-${az_ins_recovery_land}"
 echo "recovery server is $az_recovery_server"
 
-export az_restore_time="az_restore_time"
+export az_restore_time="${az_restore_time}"
 echo "restore point in time is $az_restore_time"
 
 if [ $az_landscape == "devazure" ]; then
