@@ -39,7 +39,7 @@ elif credentials.yml.enc;then
         err "decryption unsuccessful. aborting" && exit
     fi
 else
-	echo "encrypt key not found"
+	echo "encrypt key not found" && exit
 fi
 echo "setting account subscription for shared tenant"
 if az account set --subscription "$az_subscription"; then 
