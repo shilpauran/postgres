@@ -22,24 +22,11 @@ source env.sh "$1" "$2" "$3" "$4" "$5"
 echo "environment set up complete"
 
 # 2. add az login information to shared tenant
-#create service principle
-if credentials.yml;then
-	echo "credentials.yml exists- not creating this file"
-elif credentials.yml.enc;then
-	echo "credentails.yml does not exists, encrypted file present,decrypting"
-	chmod +x decrypt_credentials.sh
-	echo $credentials_encryption_key > decrypt_password_in
-	decrypt_credentials.sh
-	if decrypt_password_in; then
-		rm decrypt_password_in
-	fi
-	if credentials.yml; then
-		echo "Decryption done"
-	else
-        err "decryption unsuccessful. aborting" && exit
-    fi
+echo "logging into azure"
+if az login --service-principal --username da07a0ce-86a1-4fa1-b340-94feedd1f4f5 --password 37..kWuMHcku-ou9~_Q3SmXPaGPXh62-rN --tenant 69b863e3-480a-4ee9-8bd0-20a8adb6909b; then
+	echo "azure login successful"
 else
-	echo "encrypt key not found" && exit
+	err "azure login failed" && exit
 fi
 echo "setting account subscription for shared tenant"
 if az account set --subscription "$az_subscription"; then 
