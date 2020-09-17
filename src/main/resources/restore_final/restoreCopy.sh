@@ -48,6 +48,20 @@ if [ $az_landscape == "devazure" ]; then
   echo " shoot resource is $az_shoot_resource"
   export az_subnet="shoot--iot-dev--devazure-st-nodes"
   echo " subnet is $az_subnet"
+elif [ $az_landscape == "canary20" ]; then
+  export az_subscription="7a2732fb-6e00-4612-8d62-bedba7a3abb2"
+  echo " subscription is $az_subscription"
+  export az_shoot_resource="shoot--iot-prod--canary20"
+  echo " shoot resource is $az_shoot_resource"
+  export az_subnet="shoot--iot-prod--canary20-nodes"
+  echo " subnet is $az_subnet"
+elif [ $az_landscape == "eu20" ]; then
+  export az_subscription="7a2732fb-6e00-4612-8d62-bedba7a3abb2"
+  echo " subscription is $az_subscription"
+  export az_shoot_resource="shoot--iot-prod--eu20"
+  echo " shoot resource is $az_shoot_resource"
+  export az_subnet="shoot--iot-prod--eu20-nodes"
+  echo " subnet is $az_subnet"
 else
   echo " no subscription found"
 fi
