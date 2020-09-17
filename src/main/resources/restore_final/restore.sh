@@ -30,7 +30,7 @@ else
 fi
 echo "setting account subscription for shared tenant"
 if az account set --subscription "$az_subscription"; then 
-	echo " subscription set successful" && exit
+	echo " subscription set successfully" && exit
 else 
 	err " Subscription could not set successfully" && exit
 fi
